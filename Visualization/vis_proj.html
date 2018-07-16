@@ -1,0 +1,50 @@
+<html>
+    <style type="text/css">
+       .block1 {
+        width: 90%;
+        background: #ccc;
+        display: inline-block;
+
+       }
+       .block2 {
+        width: 20%;
+        background: #fc0;
+        display: inline-block;
+
+       }
+       .letter {
+         color: red; /* Красный цвет символов */
+         font-family: serif; /* Шрифт с засечками */
+        }
+        .good {
+          background-color: green;
+          color: blue;
+        }
+        .bad {
+          background-color: red;
+          color: blue;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8" src="./vis_proj.js"></script>
+<body width="100%" height="100%">
+<table width="100%" height="100%" border=2 bordercolor="red">
+  <tr height=100 align="center">
+    <td>
+      <input type="text" id="text1"/>
+      <input type="button" id="run" value="Add" onclick="hash()"/>
+      <br>
+      Speed: <input type="number" id="speed" value="1000">
+
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <div bgcolor="#224466" class="block1" align="center">
+        <p id="hashword"></p>
+        <p id="checker"></p>
+        <p id="hashnumber"></p></div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
