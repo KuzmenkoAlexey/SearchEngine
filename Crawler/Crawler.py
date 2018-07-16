@@ -5,13 +5,7 @@ from Modules.SpellChecker import *
 from Modules.Stemmer import Stemmer
 from Modules.Dictionary import *
 from Modules.HashIndex import HashIndex, Term
-
-CRAWL_DELAY = 1
-MAX_PAGE_COUNTER = 10
-START_PAGE_INDEX = 310006
-STEP = 2
-URL_BASE = "https://habr.com/post/"
-
+from Crawler.settings import *
 
 def update_all():
     print("Update dictionary")
@@ -21,7 +15,7 @@ def update_all():
 
     print("Save result to file")
     t = time.time()
-    # hash_index.save()
+    hash_index.save()
     print("time: ", time.time() - t)
 
     print("Num of pages: ", page_counter)
