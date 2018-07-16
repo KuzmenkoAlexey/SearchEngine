@@ -1,0 +1,44 @@
+<html>
+<head>
+  <title>NARUTOGO!</title>
+  <style>
+    .result {
+      vertical-align: top;
+    }
+  </style>
+</head>
+<body width="100%" height="100%">
+    <table width="100%" height="100%">
+      <tr width="100%" height="40" bgcolor="#DDDDDD">
+        <td>
+          <form method="post" id="search_form">
+            <b><span color="yellow">NARUTOGO!</span></b><br>
+            <input type="text" id="query" name="query" value="{{ query }}"/>
+            <input type="submit" id="go" value="GO"/>
+          </form>
+            {% if corrected != None %}
+            <p id="seggested">
+            <b>Suggested:</b>
+
+            <span id="corrected">{{ corrected }}</span>
+            </p>
+            {% endif %}
+        </td>
+      </tr>
+      <tr class="result" bgcolor="#EEEEEE">
+        <td id="result">
+          {% for doc in docs %}
+            <p>{{loop.index}} <a href="{{doc[0]}}">{{doc[0]}} (Koef: {{doc[1]}})</a></p>
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+    <script>
+        var corrected = document.getElementById("corrected");
+        corrected.onclick = function () {
+            document.getElementById("query").value = corrected.innerText;
+            document.getElementById("search_form").submit()
+        }
+    </script>
+</body>
+</html>
