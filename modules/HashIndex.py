@@ -15,7 +15,7 @@ class Term:
 
 
 class HashIndex:
-    file = 'Data/hashindex.pkl'
+    file = 'data/hashindex.pkl'
     pic = None
 
     class RowDocument:

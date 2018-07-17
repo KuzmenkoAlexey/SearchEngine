@@ -1,5 +1,7 @@
 import os
+import sys
 os.chdir('../')
+sys.path.append(os.path.dirname('..'))
 
 from flask import *
 from searchServer.settings import *
@@ -19,7 +21,7 @@ hash_index = HashIndex()
 print("Index is ready to use")
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='searchServer/templates')
 app.secret_key = '1'
 
 
@@ -29,7 +31,10 @@ def hello_world():
     if 'query' in request.form and request.form['query'].strip() != "":
         query = request.form['query']
         terms = stemmer.get_all_stems(query)
-        print(terms)
+        try:
+            print(terms)
+        except UnicodeEncodeError:
+            print("Warning: raised UnicodeEncodeError")
         result = hash_index.search(terms)
         all_correct = True
         for word in terms:

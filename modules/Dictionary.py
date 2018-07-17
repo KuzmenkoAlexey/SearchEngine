@@ -32,7 +32,7 @@ class TrieNode:
 
 
 class Dictionary:
-    def __init__(self, filename="Data/lexicon.txt"):
+    def __init__(self, filename="data/lexicon.txt"):
         self.root = TrieNode()
         self.filename = filename
         if filename is not None:
@@ -72,7 +72,7 @@ class Dictionary:
         return False
 
     def load_dictionary(self, filename):
-        file = open(filename, 'r')
+        file = open(filename, 'r', encoding='utf-8')
         for word in file:
             self.add_word(word.strip().replace('-', ""))
         file.close()
@@ -82,7 +82,7 @@ class Dictionary:
             raise NameError("No dictionary filename")
         words = []
         self.get_words(self.root, "", words)
-        file = open(self.filename, 'w')
+        file = open(self.filename, 'w', encoding='utf-8')
         for word in words:
             file.write(word + '\n')
         file.close()

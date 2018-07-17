@@ -1,5 +1,7 @@
 import os
+import sys
 os.chdir('../')
+sys.path.append(os.path.dirname('..'))
 
 import requests
 import time
@@ -79,7 +81,7 @@ while page_counter < MAX_PAGE_COUNTER:
         print("time: ", time.time() - start_indexing)
         if page_counter % 10 == 0:
             update_all()
-    except Exception:
+    except AttributeError:
         page_counter -=1
         print("not exist: ", full_url)
         continue
