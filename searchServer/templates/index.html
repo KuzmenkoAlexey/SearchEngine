@@ -1,44 +1,91 @@
 <html>
 <head>
-  <title>NARUTOGO!</title>
-  <style>
-    .result {
-      vertical-align: top;
-    }
+    <title>NARUTOGO!</title>
+<link href="https://fonts.googleapis.com/css?family=Knewave|Roboto:300,400,700&amp;subset=cyrillic" rel="stylesheet">    <style>
+        .result {
+            vertical-align: top;
+        }
+
+        #logo {
+            font-size: 40px;
+            font-family: 'Knewave', cursive;
+        }
+
+        #query {
+            font-family: 'Roboto', sans-serif;
+            font-size: 40px;
+            outline: none;
+            border: 3px solid #000000;
+            text-align: center;
+        }
+
+        #go {
+            outline: none;
+            border-radius: 0px;
+            border: 3px solid #000000;
+            font-size: 40px;
+            color: #FFFFFF;
+            background: #000000;
+            font-family: 'Roboto', sans-serif;
+        }
+        #go:hover {
+            cursor: pointer;
+        }
+
+        #select_corrected_variant {
+            outline: none;
+            -webkit-appearance:none;
+            border: none;
+            background: white;
+            font-size: 20px;
+            font-family:  'Roboto', sans-serif;
+        }
+
+        .item {
+            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            padding: 15px;
+        }
+
   </style>
 </head>
 <body width="100%" height="100%">
     <table width="100%" height="100%">
-      <tr width="100%" height="40" bgcolor="#DDDDDD">
-        <td>
+      <tr width="100%" height="40" bgcolor="#FFFFFF">
+        <td style="text-align: center">
           <form method="post" id="search_form">
-            <b><span color="yellow">NARUTOGO!</span></b><br>
-            <input type="text" id="query" name="query" value="{{ query }}"/>
-            <input type="submit" id="go" value="GO"/>
+            <b><span color="yellow" id="logo">NARUTOGO!</span></b>
+              <br>
+              <br>
+            <input type="text" id="query" name="query" value="{{ query }}" autofocus/>
+            <input type="submit" id="go" value="go"/>
           </form>
-            {% if corrected != None %}
-            <p id="seggested">
-            <b>Suggested:</b>
+            {% if variants != None %}
+            <select name="" id="select_corrected_variant">
+                <option value="" selected disabled>choose variant</option>
+                {% for variant in variants %}
+                <option value="{{ variant }}"> {{ variant }}</option>
+                {% endfor %}
+            </select>
+             {% endif %}
 
-            <span id="corrected">{{ corrected }}</span>
-            </p>
-            {% endif %}
         </td>
       </tr>
-      <tr class="result" bgcolor="#EEEEEE">
+      <tr class="result" bgcolor="#FFFFFF">
         <td id="result">
           {% for doc in docs %}
-            <p>{{loop.index}} <a href="{{doc[0]}}">{{doc[0]}} (Koef: {{doc[1]}})</a></p>
+            <p class="item">{{loop.index}} <a href="{{doc[0]}}">{{doc[0]}}</a>  k: {{round(doc[1], 3)}}</p>
           {% endfor %}
         </td>
       </tr>
     </table>
     <script>
-        var corrected = document.getElementById("corrected");
-        corrected.onclick = function () {
-            document.getElementById("query").value = corrected.innerText;
-            document.getElementById("search_form").submit()
-        }
+        var select_corrected_variant = document.getElementById("select_corrected_variant");
+        select_corrected_variant.onchange = function() {
+            document.getElementById("query").value = select_corrected_variant.value;
+            document.getElementById("search_form").submit();
+        };
     </script>
 </body>
 </html>

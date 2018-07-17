@@ -8,7 +8,7 @@ import time
 from bs4 import BeautifulSoup
 
 from modules.SpellChecker import *
-from modules.Stemmer import Stemmer
+from modules.Stemmer import Stemmer, get_all_words
 from modules.Dictionary import *
 from modules.HashIndex import HashIndex, Term
 from crawler.settings import *
@@ -30,7 +30,7 @@ def update_all():
 
 def get_term_list(text: str) -> List[Term]:
     words_dict = {}
-    for word in re.findall("[а-яА-Яa-zA-Z]+", text):
+    for word in get_all_words(text):
         word = word.lower()
         word = stemmer.get_stem(word)
         if word not in words_dict:

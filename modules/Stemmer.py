@@ -5,6 +5,10 @@ import re
 import time
 
 
+def get_all_words(text: str) -> List[str]:
+    return [w.lower() for w in re.findall("[а-яА-Яa-zA-Z]+", text)]
+
+
 class Stemmer:
     def __init__(self, dictionary, add_new_words=False):
         self.porter = Porter()
@@ -44,13 +48,17 @@ class Stemmer:
 
     def get_all_stems(self, text: str) -> List[str]:
         answer = []
-        for word in re.findall("[а-яА-Яa-zA-Z]+", text):
-            word = word.lower()
+        for word in get_all_words(text):
             answer.append(self.get_stem(word))
         return answer
 
 
 if __name__ == "__main__":
+    import os
+    import sys
+    os.chdir('../')
+    sys.path.append(os.path.dirname('..'))
+
     t = time.time()
     print("Load start")
     dictionary = Dictionary()

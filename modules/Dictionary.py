@@ -100,15 +100,3 @@ if __name__ == '__main__':
     d = Dictionary("lexicon.txt")
     d.update_dictionary()
 
-# d.add_word("hello")
-# d.add_word("hell")
-# d.add_word("првивет")
-# d.add_word("elijah")
-# d.update_dictionary()
-# d = Dictionary(filename="lexicon.txt")
-# print(node_counter)
-# while True:
-#     word = input("Enter word: ")
-#     print(d.find_word(word))
-#     print()
-

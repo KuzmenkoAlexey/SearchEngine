@@ -141,12 +141,14 @@ class SpellChecker:
         self.max_team_size = max_team_size
         self.max_mistake = 0
 
-    def correct(self, word: str,) -> List[str]:
+    def correct(self, word: str, show_mistakes=False) -> List[str]:
         leads = []
         leads += self._correct(word)
         if self.transliterate_word:
             leads += self._correct(transliterate(word))
         leads = sorted(leads, key=lambda x: float(x.mistakes))
+        if show_mistakes:
+            return [x.done+" "+str(float(x.mistakes)) for x in leads]
         if len(leads) > 0:
             min_mistake = leads[0].mistakes
             result = set()
@@ -226,6 +228,11 @@ class SpellChecker:
 
 
 if __name__ == "__main__":
+    import os
+    import sys
+    os.chdir('../')
+    sys.path.append(os.path.dirname('..'))
+
     t = time.time()
     print("Load start")
     dictionary = Dictionary()
@@ -234,5 +241,5 @@ if __name__ == "__main__":
 
     word = input("word: ")
     while word != "exit":
-        print(spell_checker.correct(word))
+        print(spell_checker.correct(word, show_mistakes=True))
         word = input("word: ")
