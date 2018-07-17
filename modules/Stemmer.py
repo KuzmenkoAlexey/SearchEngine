@@ -1,6 +1,6 @@
 from typing import *
-from Modules.Porter import Porter
-from Modules.Dictionary import *
+from modules.Porter import Porter
+from modules.Dictionary import *
 import re
 import time
 

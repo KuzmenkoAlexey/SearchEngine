@@ -1,4 +1,4 @@
-from Modules.SignatureHash import SignatureHash
+from modules.SignatureHash import SignatureHash
 import math, pickle
 
 
@@ -102,7 +102,7 @@ class HashIndex:
         self.hrefs.append((href, words))
         self.counter += 1
 
-        if self.counter > 5:
+        if self.counter > 10:
             self.counter = 0
             self.save()
 

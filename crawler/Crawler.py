@@ -1,11 +1,16 @@
+import os
+os.chdir('../')
+
 import requests
 import time
 from bs4 import BeautifulSoup
-from Modules.SpellChecker import *
-from Modules.Stemmer import Stemmer
-from Modules.Dictionary import *
-from Modules.HashIndex import HashIndex, Term
-from Crawler.settings import *
+
+from modules.SpellChecker import *
+from modules.Stemmer import Stemmer
+from modules.Dictionary import *
+from modules.HashIndex import HashIndex, Term
+from crawler.settings import *
+
 
 def update_all():
     print("Update dictionary")

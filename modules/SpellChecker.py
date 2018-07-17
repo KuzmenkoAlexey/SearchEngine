@@ -1,5 +1,5 @@
 from typing import *
-from Modules.Dictionary import *
+from modules.Dictionary import *
 import math
 import time
 import re

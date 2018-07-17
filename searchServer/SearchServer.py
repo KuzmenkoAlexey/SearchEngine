@@ -1,10 +1,13 @@
-from flask import *
-from SearchServer.settings import *
+import os
+os.chdir('../')
 
-from Modules.HashIndex import *
-from Modules.Dictionary import *
-from Modules.Stemmer import *
-from Modules.SpellChecker import *
+from flask import *
+from searchServer.settings import *
+
+from modules.HashIndex import *
+from modules.Dictionary import *
+from modules.Stemmer import *
+from modules.SpellChecker import *
 
 print("Start load dictionary")
 dictionary = Dictionary()
