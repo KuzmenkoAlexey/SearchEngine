@@ -2,13 +2,22 @@ from modules.main import *
 
 index_searcher = IndexSearcher()
 index_adder = IndexAdder()
+# todo term + []string
+index_adder.add('https://habr.com/company/pixonic/blog/417441/',
+                [Term('авито', 0.5),
+                 Term('яндекс', 0.5),
+                 Term('момент', 0.5),
+                 Term('ты', 0.5)],
+                ['https://habr.com/post/417446/',
+                 'https://habr.com/post/417444/',
+                 'https://habr.com/post/417445/'])
 
-result = index_searcher.search([Term('1', 'смартфон', 1),
-                                Term('1', 'программирование', 1),
-                                Term('1', 'блокчейн', 4),
-                                Term('1', 'яндекс', 63),
-                                Term('1', 'фото', 2),
-                                Term('1', 'карты', 2)])
+result = index_searcher.search(['смартфон',
+                                'яндекс',
+                                'блокчейн',
+                                'авито',
+                                'фото',
+                                'карты'])
 for el in result:
     print('https://habr.com/post/{}/    K: {}'.format(el[0], el[1]))
 

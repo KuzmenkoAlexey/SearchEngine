@@ -67,7 +67,9 @@ class IndexSearcher(IndexLoader):
         for i in range(len(first_array)):
             for j in range(len(second_array)):
                 if str(first_array[i][0]) == str(second_array[j][0]):
-                    result.append([first_array[i][0], first_array[i][1] * 0.6 + second_array[j][1] * 0.4])
+                    if first_array[i][1] * 0.6 + second_array[j][1] * 0.4 > 0:
+                        result.append([first_array[i][0],
+                                       first_array[i][1] * 0.6 + second_array[j][1] * 0.4])
         second_result = []
         for i in range(len(second_array)):
             flag = True
@@ -77,7 +79,8 @@ class IndexSearcher(IndexLoader):
                     break
             if flag:
                 second_array[i][1] *= 0.4
-                second_result.append(second_array[i])
+                if second_array[i][1] > 0:
+                    second_result.append(second_array[i])
         result.extend(second_result)
         result.sort(key=lambda x: x[1], reverse=True)
         return result
