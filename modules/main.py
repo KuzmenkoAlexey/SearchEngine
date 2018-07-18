@@ -2,11 +2,11 @@ import math
 import pickle
 
 from modules.PageRank import PageRank
-from modules.InverseIndexTree import TernaryTree
+from modules.InverseIndexTree import TernarySearchTree
 from modules.TfIdfVectorModel import VectorModel, Term
 
 pr = PageRank()
-tree = TernaryTree()
+tree = TernarySearchTree()
 vm = VectorModel()
 
 
@@ -36,10 +36,12 @@ class IndexAdder(IndexLoader):
         self.obj = []
         try:
             self.obj = self._load()
+            vm.clear()
             for ob in self.obj:
                 pr.add_page(ob.href, ob.links)
                 vm.add(ob.href, ob.terms)
         except Exception:
+            print('Papuga1')
             pass
 
     def add(self, href, terms, links=None):
@@ -56,10 +58,12 @@ class IndexSearcher(IndexLoader):
         self.obj = []
         try:
             self.obj = self._load()
+            vm.clear()
             for ob in self.obj:
                 pr.add_page(ob.href, ob.links)
                 vm.add(ob.href, ob.terms)
         except Exception:
+            print('Papuga2')
             pass
         pr.process()
         first_array = pr.get_ranks()
@@ -68,7 +72,6 @@ class IndexSearcher(IndexLoader):
         for i in range(len(first_array)):
             for j in range(len(second_array)):
                 if str(first_array[i][0]) == str(second_array[j][0]):
-
                     result.append([first_array[i][0],
                                    math.fabs(first_array[i][1] * 0.6 + second_array[j][1] * 0.4)])
         second_result = []
