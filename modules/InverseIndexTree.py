@@ -13,6 +13,8 @@ class TernaryTree:
         self.root = None
 
     def add(self, value):
+        if len(value) <= 2:
+            return None
         if self.root:
             self._add(value, self.root)
         else:

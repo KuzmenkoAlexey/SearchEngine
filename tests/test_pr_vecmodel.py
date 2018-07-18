@@ -12,12 +12,12 @@ index_adder.add('https://habr.com/company/pixonic/blog/417441/',
                  'https://habr.com/post/417444/',
                  'https://habr.com/post/417445/'])
 
-result = index_searcher.search(['смартфон',
+result = index_searcher.search(['заканчивать',
                                 'яндекс',
                                 'блокчейн',
                                 'авито',
                                 'фото',
-                                'карты'])
+                                'мы'])
 for el in result:
     print('https://habr.com/post/{}/    K: {}'.format(el[0], el[1]))
 
