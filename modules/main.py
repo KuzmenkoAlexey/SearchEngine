@@ -41,7 +41,6 @@ class IndexAdder(IndexLoader):
                 pr.add_page(ob.href, ob.links)
                 vm.add(ob.href, ob.terms)
         except Exception:
-            print('Papuga1')
             pass
 
     def add(self, href, terms, links=None):
@@ -63,7 +62,6 @@ class IndexSearcher(IndexLoader):
                 pr.add_page(ob.href, ob.links)
                 vm.add(ob.href, ob.terms)
         except Exception:
-            print('Papuga2')
             pass
         pr.process()
         first_array = pr.get_ranks()
