@@ -3,6 +3,8 @@ var CHAR_SET = ['бп', 'вф', 'эеё', 'сз', 'ня', 'дт',
                 'хг', 'шщ', 'ъьы', 'ий', 'оа', 'ую',
                 'цч', 'млр', 'жк', '.,!?']
 
+var used = false;
+				
 function draw_charset(pos, good) {
 
   var checker = document.getElementById("checker");
@@ -94,7 +96,22 @@ function sig_hash_with_mistakes(str_to_hash) {
     return answer;
 }
 
+function get_delay() {
+	delay = document.getElementById("speed");
+	if (delay.value < 0) {
+		delay.value = 0;
+	}
+	if (delay.value > 1000) {
+		delay.value = 1000;
+	}
+	return delay.value;
+}
+
 async function hash() {
+	if (used) {
+		return;
+	}
+	used = true;
     var inp = document.getElementById("text1");
     var hashword = document.getElementById("hashword");
     var out = document.getElementById("hashword");
@@ -118,12 +135,13 @@ async function hash() {
       for (var j = 0; j <= cat && j < CHAR_SET.length; ++j) {
         var good = (cat == j);
         draw_charset(j, good);
-        await sleep(document.getElementById("speed").value);
+        await sleep(get_delay());
       }
-      await sleep(document.getElementById("speed").value * 2);
+      await sleep(get_delay() * 2);
       draw_hashnumber(n);
-      await sleep(document.getElementById("speed").value * 2);
+      await sleep(get_delay() * 2);
     }
+	used = false;
 
 
 }
