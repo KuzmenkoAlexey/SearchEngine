@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 from modules.SpellChecker import *
 from modules.Stemmer import Stemmer, get_all_words
 from modules.Dictionary import *
-from modules.HashIndex import HashIndex, Term
+from modules.Term import *
 from crawler.settings import *
 
 
@@ -22,7 +22,8 @@ def update_all():
 
     print("Save result to file")
     t = time.time()
-    hash_index.save()
+    if MODE == 'SH':
+        search_index.save()
     print("time: ", time.time() - t)
 
     print("Num of pages: ", page_counter)
@@ -50,16 +51,26 @@ def get_link_list(post):
         if 'href' in link.attrs:
             if re.match("https://habr\.com/.+", link.attrs['href']):
                 link_list.append(link.attrs['href'])
-
+    return link_list
 
 print("Start load dictionary")
 start_time = time.time()
 dictionary = Dictionary()
 stemmer = Stemmer(dictionary, add_new_words=True)
 spell_checker = SpellChecker(dictionary)
-hash_index = HashIndex()
-print("Dictionary load time: ", time.time() - start_time)
 
+search_index = None
+if MODE == 'SH':
+    from modules.HashIndex import HashIndex
+    search_index = HashIndex()
+elif MODE == 'VM':
+    from modules.VectorModel import IndexAdder
+    search_index = IndexAdder()
+else:
+    print("Error: wrong mode setting")
+    exit(0)
+
+print("Dictionary load time: ", time.time() - start_time)
 page_counter = 0
 index = 0
 
@@ -76,7 +87,7 @@ while page_counter < MAX_PAGE_COUNTER:
         post = soup.find('div', {'class': "post__text"})
         text = soup.title.string + "".join(post.findAll(text=True))
 
-        hash_index.add(full_url, get_term_list(text))
+        search_index.add(full_url, get_term_list(text), get_link_list(post))
         print("indexing: ", full_url)
         print("time: ", time.time() - start_indexing)
         if page_counter % 10 == 0:
