@@ -11,22 +11,25 @@ class Term(LinkProcessor):
 
 class VectorModel(LinkProcessor):
     def __init__(self):
+        self.clear()
+
+    def clear(self):
         self.documents = dict()
-        self.root = tree.TernaryTree()
+        self.root = tree.TernarySearchTree()
 
     def add(self, href, terms):
         href = self.link_processor(str(href))
         self.documents[href] = terms
         for el in terms:
-            self.root.add_index(el.term, href)
+            self.root.insert(el.term, href)
 
     def search(self, terms):
         docs = set()
         answer = {}
         term_idf = {}
         for term in terms:
-            result = self.root.search(term, 0, self.root.root)
-            if result is not None:
+            result = self.root.__contains__(term)
+            if isinstance(result, list):
                 term_idf[term] = math.log10(len(self.documents) / len(result))
                 for el in result:
                     docs.add(el)

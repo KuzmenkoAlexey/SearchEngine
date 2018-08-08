@@ -1,11 +1,12 @@
+import math
 import pickle
 
 from modules.PageRank import PageRank
-from modules.InverseIndexTree import TernaryTree
+from modules.InverseIndexTree import TernarySearchTree
 from modules.TfIdfVectorModel import VectorModel, Term
 
 pr = PageRank()
-tree = TernaryTree()
+tree = TernarySearchTree()
 vm = VectorModel()
 
 
@@ -20,12 +21,12 @@ class IndexLoader:
     index = None
 
     def _load(self):
-        with open('../data/data.pickle', 'rb') as f:
+        with open('data/data.pickle', 'rb') as f:
             obj = pickle.load(f)
         return obj
 
     def _save(self, new_data):
-        with open('../data/data.pickle', 'wb') as f:
+        with open('data/data.pickle', 'wb') as f:
             self.pic = pickle.Pickler(f)
             self.pic.dump(new_data)
 
@@ -35,10 +36,12 @@ class IndexAdder(IndexLoader):
         self.obj = []
         try:
             self.obj = self._load()
+            vm.clear()
             for ob in self.obj:
                 pr.add_page(ob.href, ob.links)
                 vm.add(ob.href, ob.terms)
         except Exception:
+            print('Papuga1')
             pass
 
     def add(self, href, terms, links=None):
@@ -55,10 +58,12 @@ class IndexSearcher(IndexLoader):
         self.obj = []
         try:
             self.obj = self._load()
+            vm.clear()
             for ob in self.obj:
                 pr.add_page(ob.href, ob.links)
                 vm.add(ob.href, ob.terms)
         except Exception:
+            print('Papuga2')
             pass
         pr.process()
         first_array = pr.get_ranks()
@@ -67,9 +72,8 @@ class IndexSearcher(IndexLoader):
         for i in range(len(first_array)):
             for j in range(len(second_array)):
                 if str(first_array[i][0]) == str(second_array[j][0]):
-                    if first_array[i][1] * 0.6 + second_array[j][1] * 0.4 > 0:
-                        result.append([first_array[i][0],
-                                       first_array[i][1] * 0.6 + second_array[j][1] * 0.4])
+                    result.append([first_array[i][0],
+                                   math.fabs(first_array[i][1] * 0.6 + second_array[j][1] * 0.4)])
         second_result = []
         for i in range(len(second_array)):
             flag = True
@@ -79,8 +83,9 @@ class IndexSearcher(IndexLoader):
                     break
             if flag:
                 second_array[i][1] *= 0.4
-                if second_array[i][1] > 0:
-                    second_result.append(second_array[i])
+                second_result.append(math.fabs(second_array[i]))
         result.extend(second_result)
         result.sort(key=lambda x: x[1], reverse=True)
+        for index in range(len(result)):
+            result[index][0] = "https://habr.com/post/" + str(result[index][0])
         return result

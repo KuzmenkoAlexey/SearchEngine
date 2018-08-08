@@ -6,7 +6,8 @@ sys.path.append(os.path.dirname('..'))
 from flask import *
 from searchServer.settings import *
 
-from modules.HashIndex import *
+# from modules.HashIndex import *
+from modules.VectorModel import IndexSearcher
 from modules.Dictionary import *
 from modules.Stemmer import *
 from modules.SpellChecker import *
@@ -17,11 +18,13 @@ print("Dictionary loaded")
 stemmer = Stemmer(dictionary=dictionary)
 spell_checker = SpellChecker(dictionary=dictionary)
 print("Built index")
-hash_index = HashIndex()
+# hash_index = HashIndex()
+hash_index = IndexSearcher()
 print("Index is ready to use")
 
 
-app = Flask(__name__, template_folder='searchServer/templates')
+# app = Flask(__name__, template_folder='searchServer/templates')
+app = Flask(__name__, template_folder='templates')
 app.secret_key = '1'
 
 
