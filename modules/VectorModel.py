@@ -3,7 +3,7 @@ import pickle
 
 from modules.PageRank import PageRank
 from modules.InverseIndexTree import TernarySearchTree
-from modules.TfIdfVectorModel import VectorModel, Term
+from modules.TfIdfVectorModel import VectorModel
 
 pr = PageRank()
 tree = TernarySearchTree()
@@ -21,12 +21,12 @@ class IndexLoader:
     index = None
 
     def _load(self):
-        with open('../data/data.pickle', 'rb') as f:
+        with open('data/data.pickle', 'rb') as f:
             obj = pickle.load(f)
         return obj
 
     def _save(self, new_data):
-        with open('../data/data.pickle', 'wb') as f:
+        with open('data/data.pickle', 'wb') as f:
             self.pic = pickle.Pickler(f)
             self.pic.dump(new_data)
 
@@ -84,4 +84,6 @@ class IndexSearcher(IndexLoader):
                 second_result.append(math.fabs(second_array[i]))
         result.extend(second_result)
         result.sort(key=lambda x: x[1], reverse=True)
+        for index in range(len(result)):
+            result[index][0] = "https://habr.com/post/" + str(result[index][0])
         return result
