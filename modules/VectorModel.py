@@ -3,7 +3,7 @@ import pickle
 
 from modules.PageRank import PageRank
 from modules.InverseIndexTree import TernarySearchTree
-from modules.TfIdfVectorModel import VectorModel, Term
+from modules.TfIdfVectorModel import VectorModel
 
 pr = PageRank()
 tree = TernarySearchTree()

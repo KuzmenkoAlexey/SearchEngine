@@ -11,8 +11,6 @@ from modules.SpellChecker import *
 from modules.Stemmer import Stemmer, get_all_words
 from modules.Dictionary import *
 from modules.Term import *
-# from modules.HashIndex import HashIndex, Term
-from modules.VectorModel import IndexAdder, Term
 from crawler.settings import *
 
 
@@ -60,9 +58,19 @@ start_time = time.time()
 dictionary = Dictionary()
 stemmer = Stemmer(dictionary, add_new_words=True)
 spell_checker = SpellChecker(dictionary)
-search_index = IndexAdder()
-print("Dictionary load time: ", time.time() - start_time)
 
+search_index = None
+if MODE == 'SH':
+    from modules.HashIndex import HashIndex
+    search_index = HashIndex()
+elif MODE == 'VM':
+    from modules.VectorModel import IndexAdder
+    search_index = IndexAdder()
+else:
+    print("Error: wrong mode setting")
+    exit(0)
+
+print("Dictionary load time: ", time.time() - start_time)
 page_counter = 0
 index = 0
 
