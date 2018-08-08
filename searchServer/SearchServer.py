@@ -5,10 +5,6 @@ sys.path.append(os.path.dirname('..'))
 
 from flask import *
 from searchServer.settings import *
-
-# from modules.HashIndex import *
-from modules.VectorModel import IndexSearcher
-from modules.Dictionary import *
 from modules.Stemmer import *
 from modules.SpellChecker import *
 
@@ -18,8 +14,19 @@ print("Dictionary loaded")
 stemmer = Stemmer(dictionary=dictionary)
 spell_checker = SpellChecker(dictionary=dictionary)
 print("Built index")
-# hash_index = HashIndex()
-hash_index = IndexSearcher()
+
+search_index = None
+if MODE == 'SH':
+    from modules.HashIndex import *
+    search_index = HashIndex()
+elif MODE == 'VM':
+    from modules.VectorModel import IndexSearcher
+    from modules.Dictionary import *
+    search_index = IndexSearcher()
+else:
+    print("Error: wrong mode setting")
+    exit(0)
+
 print("Index is ready to use")
 
 
@@ -51,7 +58,7 @@ def hello_world():
         try:
 
             print("Terms in query: ", terms)
-            result = hash_index.search(terms)
+            result = search_index.search(terms)
             all_correct = True
             for word in terms:
                 all_correct = all_correct and dictionary.find_word(word)

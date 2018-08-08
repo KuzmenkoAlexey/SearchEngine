@@ -3,12 +3,6 @@ from modules import InverseIndexTree as tree
 from modules.PageRank import LinkProcessor
 
 
-class Term(LinkProcessor):
-    def __init__(self, term, tf):
-        self.term = term
-        self.tf = tf
-
-
 class VectorModel(LinkProcessor):
     def __init__(self):
         self.clear()
